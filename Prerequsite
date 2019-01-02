@@ -1,0 +1,10 @@
+#Install Google Cloud SDK
+https://cloud.google.com/sdk/
+
+#Create Kubernetes cluster
+#https://cloud.google.com/kubernetes-engine/versioning-and-upgrades
+########################################################################################################################
+gcloud container clusters create "k8s-cluster"  --zone "europe-west1-d" --machine-type "custom-1-1024" --image-type "GCI" --disk-size "100"   --network "default" --enable-cloud-logging   --no-enable-cloud-monitoring --enable-autoscaling --min-nodes="2" --max-nodes="10"   --enable-legacy-authorization  --cluster-version=1.11.2-gke.26
+
+#Create single pod
+kubectl run -i -t busybox --rm --image=busybox --restart=Never --rm -- sh

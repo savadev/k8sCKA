@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-node-selector
+spec:
+  nodeSelector:
+    gpu: "true"
+  containers:
+  - image: nginx
+    name: gpu-required-pod
