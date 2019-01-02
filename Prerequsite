@@ -6,5 +6,14 @@ https://cloud.google.com/sdk/
 ########################################################################################################################
 gcloud container clusters create "k8s-cluster"  --zone "europe-west1-d" --machine-type "custom-1-1024" --image-type "GCI" --disk-size "100"   --network "default" --enable-cloud-logging   --no-enable-cloud-monitoring --enable-autoscaling --min-nodes="2" --max-nodes="10"   --enable-legacy-authorization  --cluster-version=1.11.2-gke.26
 
+# Displays all Google Compute Engine instances in a project.
+gcloud compute instances list
+
 #Create single pod
 kubectl run -i -t busybox --rm --image=busybox --restart=Never --rm -- sh
+
+# Resize Kubernetes cluster
+gcloud container clusters resize "k8s-cluster" --size=6 --zone europe-west1-d
+
+# Displays all Google Compute Engine instances in a project.
+gcloud compute instances list
