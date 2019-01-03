@@ -8,3 +8,10 @@ gcloud container clusters create "k8s-cluster"  --zone "europe-west1-d" --machin
 
 #Create single pod
 kubectl run -i -t busybox --rm --image=busybox --restart=Never --rm -- sh
+
+
+#VIM
+#https://stackoverflow.com/questions/1878974/redefine-tab-as-4-spaces
+set et ts=2 ai sw=2 nu
+set listchars=space:· #Alt + 0183
+set list

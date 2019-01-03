@@ -1,0 +1,4 @@
+4.  Create a service that uses a scratch disk.
+        a. Change the service to mount a disk from the host.
+        b. Change the service to mount a persistent volume.
+########################################################################################################################

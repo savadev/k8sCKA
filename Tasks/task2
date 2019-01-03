@@ -1,0 +1,27 @@
+2.  Create 2 pod definitions: the second pod should be scheduled to run anywhere the first pod is running - 2nd pod runs
+    alongside the first pod.
+########################################################################################################################
+kubectl run pod1 --image=nginx --restart=Never --dry-run -o yaml >pod1.yml
+kubectl run pod2 --image=nginx --restart=Never --dry-run -o yaml >pod2.yml
+kubectl create -f pod1.yml
+vim pod2.yml
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: run
+            operator: In
+            values:
+            - pod1
+        topologyKey: kubernetes.io/hostname
+
+
+
+
+
+
+
+#Links
+#https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
