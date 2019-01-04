@@ -1,0 +1,17 @@
+10. Create a pod that uses secrets
+        a. Pull secrets from environment variables
+        b. Pull secrets from a volume
+        c. Dump the secrets out via kubectl to show it worked
+
+########################################################################################################################
+#https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/
+
+kubectl create -f https://k8s.io/docs/tasks/inject-data-application/secret.yaml
+kubectl create -f https://k8s.io/docs/tasks/inject-data-application/secret-envars-pod.yaml
+
+
+kubectl create -f https://k8s.io/docs/tasks/inject-data-application/secret-pod.yaml
+
+kubectl describe secret test-secret
+
+kubectl create secret generic test-secret --from-literal=username='my-app' --from-literal=password='39528$vdg7Jb'

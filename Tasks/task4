@@ -2,3 +2,36 @@
         a. Change the service to mount a disk from the host.
         b. Change the service to mount a persistent volume.
 ########################################################################################################################
+
+
+kubectl create -f https://k8s.io/docs/tasks/configure-pod-container/pod-redis.yaml --edit
+kubectl label pod nginx web=nginx
+kubectl expose pod nginx --port=80 --name=nginxsvc
+kubectl get svc
+kubectl describe svc
+
+kubectl create -f https://k8s.io/examples/application/deployment.yaml --edit
+kubectl get deployment
+kubectl describe deployments.apps nginx-deployment
+
+kubectl expose deployment nginx-deployment --port=80
+kubectl get svc
+kubectl describe service nginx-deployment
+kubectl get ep
+
+
+kubectl create -f https://k8s.io/docs/tasks/configure-pod-container/task-pv-volume.yaml
+kubectl create -f https://k8s.io/docs/tasks/configure-pod-container/task-pv-claim.yaml
+kubectl edit deployments.apps nginx-deployment
+#Modify Volume
+#https://v1-11.docs.kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+#  volumes:
+#    - name: task-pv-storage
+#      persistentVolumeClaim:
+#       claimName: task-pv-claim
+
+kubectl rollout history deployment nginx-deployment
+
+
+#Links
+#https://v1-11.docs.kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/

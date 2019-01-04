@@ -1,0 +1,21 @@
+5.  Create a pod that has a liveness check
+
+########################################################################################################################
+kubectl create -f https://k8s.io/docs/tasks/configure-pod-container/http-liveness.yaml --edit
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-http
+spec:
+  containers:
+  - name: liveness
+    image: nginx
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 3
+      periodSeconds: 3

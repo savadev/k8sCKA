@@ -1,0 +1,12 @@
+7.  Create a daemon set
+        a. Change the update strategy to do a rolling update but delaying 30 seconds between pod updates
+
+########################################################################################################################
+
+kubectl run nginx --image=nginx --dry-run -o yaml >deployment.yaml
+kubectl explain daemonset
+kubectl explain daemonset.spec
+kubectl explain daemonset.spec.updateStrategy
+kubectl create -f deployment.yaml
+
+vim deployment.yaml

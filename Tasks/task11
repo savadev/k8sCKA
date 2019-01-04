@@ -1,0 +1,4 @@
+11. Create a job that runs every 3 minutes and prints out the current time.
+
+########################################################################################################################
+kubectl create -f https://k8s.io/examples/application/job/cronjob.yaml --edit

@@ -1,0 +1,7 @@
+8.  Create a static pod
+
+########################################################################################################################
+
+ kubectl run staticpd --image=nginx --restart=Never --dry-run -o yaml >pod.yaml
+ vim pod.yaml
+ cp pod.yaml /etc/kubernetes/manifests/

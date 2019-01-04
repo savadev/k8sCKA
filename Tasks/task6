@@ -1,0 +1,13 @@
+6.  Create a service that manually requires endpoint creation - and create that too
+
+########################################################################################################################
+
+kubectl create service clusterip testsvc --tcp=80 --dry-run  -o yaml >svc.yml
+vim svc.yml
+kubectl create -f svc.yaml
+
+kubectl get ep kubernetes -o yaml >ep.yaml
+vim ep.yaml
+kubectl create -f ep.yaml
+
+kubectl describe service testsvc
