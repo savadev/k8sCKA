@@ -1,0 +1,6 @@
+14. Create a horizontal autoscaling group that starts with 2 pods and scales when CPU usage is over 50%.
+
+########################################################################################################################
+kubectl run nginx --image=nginx --port=80 --expose --replicas=2
+kubectl get deployments
+kubectl autoscale deployment nginx --max=5 --min=2 --cpu-percent=50

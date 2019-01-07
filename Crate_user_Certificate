@@ -1,0 +1,101 @@
+USER='ivanov'
+
+#Download Easyrsa and create certificate request
+########################################################################################################################
+curl -LO https://storage.googleapis.com/kubernetes-release/easy-rsa/easy-rsa.tar.gz
+tar xzf easy-rsa.tar.gz
+cd easy-rsa-master/easyrsa3
+./easyrsa init-pki
+
+#Gen key and certificate request
+./easyrsa gen-req $USER nopass
+cp pki/private/$USER.key ~/.kube/
+
+
+#Create a Certificate Signing Request object
+########################################################################################################################
+cd ../..
+cat > certsignrequest.yml<< EOF
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: user-request-$USER
+spec:
+  groups:
+  - system:authenticated
+  request: $(cat easy-rsa-master/easyrsa3/pki/reqs/$USER.req | base64 | tr -d '\n')
+  usages:
+  - digital signature
+  - key encipherment
+  - client auth
+EOF
+
+kubectl create -f certsignrequest.yml
+kubectl get certificatesigningrequest
+
+#Approve certificate and creat role bindings
+########################################################################################################################
+kubectl certificate approve user-request-$USER
+
+#Create ClusterRoleBinding
+###############################################
+cat > ClusterRoleBinding.yml<< EOF
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: $USER-view-all
+subjects:
+- kind: User
+  name: $USER
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+EOF
+
+#Create RoleBinding
+###############################################
+cat > RoleBinding.yml<< EOF
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: $USER-edit-default
+  namespace: default # This only grants permissions within the "default" namespace.
+subjects:
+- kind: User
+  name: $USER
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+EOF
+
+kubectl create -f RoleBinding.yml
+kubectl create -f ClusterRoleBinding.yml
+
+
+#Dowload cerificate and create  the kubectl configuration
+########################################################################################################################
+
+kubectl get csr user-request-$USER -o jsonpath='{.status.certificate}' | base64 -d >  ~/.kube/$USER.pem
+
+kubectl config get-clusters
+CLUSTER='secure-way-205908_kubernetes'
+
+
+kubectl config set-credentials $USER \
+--embed-certs=true \
+--client-certificate=$HOME/.kube/$USER.pem \
+--client-key=$HOME/.kube/$USER.key
+
+kubectl config set-context $USER --cluster=$CLUSTER --user=$USER
+kubectl  config use-context $USER
+
+#Check
+kubectl  get po
+
+
+#https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster/
+#https://kubernetes.io/docs/reference/access-authn-authz/authentication/#x509-client-certs

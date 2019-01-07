@@ -1,0 +1,8 @@
+25. Get logs for a pod
+
+########################################################################################################################
+
+kubectl  run nginx --image=nginx --restart=Never
+kubectl get po
+kubectl logs nginx
+kubectl describe pod nginx

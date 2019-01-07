@@ -1,0 +1,9 @@
+16. Create a networking policy such that only pods with the label access=granted can talk to it.
+        a. Create an nginx pod and attach this policy to it.
+        b. Create a busybox pod and attempt to talk to nginx - should be blocked
+        c. Attach the label to busybox and try again - should be allowed
+
+########################################################################################################################
+#https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/
+
+

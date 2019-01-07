@@ -2,3 +2,24 @@
 #https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
 
 ########################################################################################################################
+
+wget https://k8s.io/examples/controllers/job.yaml
+vim job.yaml
+kubectl create -f job.yaml
+
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  completions: 20
+  parallelism: 5
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: busybox
+        command: ["echo",  "Hello parallel world"]
+      restartPolicy: Never
+  backoffLimit: 4

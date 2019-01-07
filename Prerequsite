@@ -15,3 +15,18 @@ kubectl run -i -t busybox --rm --image=busybox --restart=Never --rm -- sh
 set et ts=2 ai sw=2 nu
 set listchars=space:· #Alt + 0183
 set list
+
+#https://eax.me/vim-commands/
+
+== Выделение ==
+SHIFT + v                 выделить строку
+
+== Отступы ==
+[#]>                      сдвинуть выделенное вправо
+[#]<                      сдвинуть выделенное влево
+[#]>>                     сдвинуть строку вправо
+[#]<<                     сдвинуть строку влево
+set tabstop=#             для табуляции используется # пробелов
+set shiftwidth=#          в командах отступа используется # пробелов
+set [no]expandtab         заменять ли табуляцию на соответствующее
+                            число пробелов

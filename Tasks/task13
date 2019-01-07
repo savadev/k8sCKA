@@ -1,0 +1,9 @@
+13. Create a service that uses an external load balancer and points to a 3 pod clusterrunning nginx.
+
+########################################################################################################################
+
+kubectl run nginx --image=nginx --replicas=3 --port=80 --expose --dry-run -o yaml >deployment.yaml
+vim deployment.yaml
+kubectl create -f deployment.yaml
+kubectl get po
+kubectl get svc

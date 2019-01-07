@@ -1,0 +1,8 @@
+17. Create a service that references an externalname.
+        a. Test that this works from another pod
+
+########################################################################################################################
+
+
+kubectl create service externalname ggl --external-name=google.com
+kubectl run tst --image=busybox --rm --restart=Never -it -- sh

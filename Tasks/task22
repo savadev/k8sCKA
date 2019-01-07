@@ -1,0 +1,8 @@
+22. Deploy nginx with 3 replicas and then expose a port
+        a. Use port forwarding to talk to a specific port
+
+########################################################################################################################
+kubectl  run nginx --image=nginx --port=80 --expose --replicas=3
+
+kubectl port-forward -h
+kubectl port-forward deployment/nginx 8080:80

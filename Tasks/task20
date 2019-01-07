@@ -1,0 +1,10 @@
+20. Write an ingress rule that redirects calls to /foo to one service and to /bar to another
+
+########################################################################################################################
+#https://kubernetes.io/docs/concepts/services-networking/ingress/
+
+kubectl run service1 --image=nginx --port=80 --expose
+kubectl run service2 --image=nginx --port=80 --expose
+vim inr.yaml
+kubectl create -f inr.yaml
+

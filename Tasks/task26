@@ -1,0 +1,7 @@
+26. Deploy a pod with the wrong image name (like --image=nginy) and find the error message.
+
+########################################################################################################################
+kubectl run testpod --image=wrongimg --restart=Never
+kubectl get po
+kubectl describe pod testpod
+

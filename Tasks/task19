@@ -1,0 +1,24 @@
+19. Create a namespace
+        a. Run a pod in the new namespace
+        b. Put memory limits on the namespace
+        c. Limit pods to 2 persistent volumes in this namespace
+
+########################################################################################################################
+#https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-default-namespace/
+#https://kubernetes.io/docs/concepts/policy/resource-quotas/
+
+
+ kubectl create namespace test
+ kubectl run nginx  --image=nginx --namespace=test --restart=Never
+ kubectl get po -n test
+
+ kubectl create -f https://k8s.io/examples/admin/resource/memory-defaults.yaml --namespace=test
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: storagequota
+spec:
+  hard:
+    persistentvolumeclaims: "2"
+

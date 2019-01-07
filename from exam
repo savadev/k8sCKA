@@ -1,0 +1,78 @@
+1.  Missing Worker node problem. You need to join that node to the cluster it has weight-age of 9%
+
+2.  ETCD back up one
+kubectl describe po kube-apiserver-master -n kube-system | grep etcd
+ETCDCTL_API=3 etcdctl  --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save snapshotdb
+kubectl cp kube-system/etcd-master:tmp/snapshotdb snapshotdb
+
+3.  Create a file called deployment-nginx.yaml that declares a deployment in the non-default namespace, with six replicas running the nginx:1.7.9 image.
+
+4.  Deployment already created with 4 replicas, scale up to 6 pods ,expose above deployment to Service of type NodePort and test it
+
+5.  Write an ingress rule that redirects calls to /foo to one service and to /bar to another
+
+6.  Create a niginx pod of name: nginx-sample that has a liveness check of a file
+
+7. LIST ALL PV's by SORTING CAPACITY
+
+8. make the node labeled name=k8s-node-0  unavailable and reschedule all the pods to other node
+
+1) find nodes with certain labels, write the count to a file
+
+2) check to see how many nodes are ready ( not including nodes tainted NoSchedule) and write the number to /opt/output.txt. - 2%
+
+3) scale deployment xyc to 6 pods - 1%
+4) create a podname kucc1 with single container for each of the following images running inside (there may be between 1 and 4 images specified): nginx + redis - 4%
+
+
+
+
+########################################################################################################################
+Chris Meyer [8:43 AM]
+I'm working with kubeadm and trying to do a backup/restore for etcd.  For whatever reason, I get "Error: unknown command "save" for "etcdctl"" when trying to use the "ETCDCTL_API=3 etcdctl --endpoints $ENDPOINT snapshot save snapshotdb" command.  The docs say you can manually copy the /member/snap/db file.  But isn't really clear on how to restore from that.  Is it as simple as just copying the "backup" over the original?
+
+
+Arun Rajendran [9:38 AM]
+@Chris Meyer if the cluster installed using kubeadm then you need to run this command inside the etcd-master pod
+kubectl exec -it etcd-kmaster -n kube-system -- /bin/sh
+/ # ETCDCTL_API=3 etcdctl snapshot save snapshotdb --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key
+
+Arun Rajendran [9:43 AM]
+ETCDCTL_API=3 etcdctl snapshot save snapshotdb --endpoints=https://127.0.0.1:2380,https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.cr
+t --key=/etc/kubernetes/pki/etcd/server.key
+
+ETCDCTL_API=3 etcdctl snapshot save snapshot.db --cacert=/etc/etcd/ca.pem --cert=/etc/etcd/kubernetes.pem --key=/etc/etcd/kubernetes-key.pem
+
+
+
+########################################################################################################################
+Marco Palamede [Dec 10th at 12:01 PM]
+Hello people. Is that possible to only have the name of the pod consuming the most CPU? I used "kubectl top --no-headers | sort -n | awk '{print$1}'"
+
+
+1 reply
+Sudheernath [26 days ago]
+kubectl top pod | grep -v NAME | sort -k 3 -nr | awk -F ' ' 'NR==1{print $1}'
+
+
+you can get everything but completions and parallelism with `kubectl run somejob --image=busybox --restart=OnFailure --dry-run -o yaml -- echo hello parallel world`
+
+
+
+
+
+
+1 - DNS Resolution - https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
+2 - Static Pod - https://kubernetes.io/docs/tasks/administer-cluster/static-pod/
+3 - Etcd Backup - https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/
+4 - Missing Worker Node - No Idea :slightly_smiling_face: (edited)
+
+copy configd from working clusters
+
+ноду из кластера потом обратно в кластер
+
+
+https://gist.github.com/herpiko/9d3b984e4f7a465b3562c36e8879af55
+
+https://github.com/mikejoh/cka-exam-clusters
+
