@@ -24,6 +24,19 @@ kubectl cp kube-system/etcd-master:tmp/snapshotdb snapshotdb
 3) scale deployment xyc to 6 pods - 1%
 4) create a podname kucc1 with single container for each of the following images running inside (there may be between 1 and 4 images specified): nginx + redis - 4%
 
+Create a file called deployment-nginx.yaml that declares a deployment in the non-default namespace, with six replicas running the nginx:1.7.9 image.
+
+Each pod should have the label *app=revproxy*. The deployment should have the label *client=user*. Configure the deployment so that when the deployment is updated, the existing pods are killed off before new pods are created to replace them.
+
+There was one question for multi container but those were launch redis/nginx and i guess consul
+
+create a pod that has two containers. both containers should run the nginx image the first container should run as user-id 3000, and the second container with user-id 5500. Both containers should use file system group id 2320.
+
+create configmap called appconfig- that contains the following two entries:
+
+'localhost_string' set to 'localhost:8080'
+'url' set to 'kubernetes.io'
+run a pod called question-pod with a single container running the nginx image, and expose these configuration settings as environment variables inside the container.
 
 
 
@@ -76,3 +89,4 @@ https://gist.github.com/herpiko/9d3b984e4f7a465b3562c36e8879af55
 
 https://github.com/mikejoh/cka-exam-clusters
 
+https://luxaslabs.com/
