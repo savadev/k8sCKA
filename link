@@ -36,3 +36,5 @@ https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
 
 https://medium.com/@toddrosner/kubernetes-tls-bootstrapping-cf203776abc7
+
+https://suraj.io/post/add-new-k8s-node-cert-rotate/
