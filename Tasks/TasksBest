@@ -44,3 +44,6 @@
         a. Use port forwarding to talk to a specific port
 - 23. Make an API call using CURL and proper certs
 - 24. Upgrade a cluster with kubeadm
+
+13. Configure the cluster to use 8.8.8.8 and 8.8.4.4 as upstream DNS servers.
+

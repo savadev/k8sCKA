@@ -15,6 +15,7 @@ kubectl run -i -t busybox --rm --image=busybox --restart=Never --rm -- sh
 set et ts=2 ai sw=2 nu
 set listchars=space:· #Alt + 0183
 set list
+set paste
 
 #https://eax.me/vim-commands/
 
